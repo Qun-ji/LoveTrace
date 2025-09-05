@@ -206,8 +206,7 @@
           <p class="note">时间：2025.10.01 12:00（1 晚）</p>
           <p>地点：石嘴山·大武口·Sakura Hotel</p>
         </div>
-        <iframe class="map" loading="lazy"
-          src="https://surl.amap.com/1nxTDspW1CY" frameborder="0" allowfullscreen></iframe>
+        <div id="amap1" class="map" style="width:100%;height:220px;border-radius:12px"></div>
       </div>
       <div class="card item">
         <div>
@@ -216,8 +215,7 @@
           <p class="note">时间：2025.10.02 11:00 – 14:00</p>
           <p>地点：石嘴山·大武口</p>
         </div>
-        <iframe class="map" loading="lazy"
-          src="https://surl.amap.com/1nxTDspW1CY" frameborder="0" allowfullscreen></iframe>
+        <div id="amap2" class="map" style="width:100%;height:220px;border-radius:12px"></div>
       </div>
     </div>
   </section>
@@ -348,6 +346,16 @@
       }
     });
     renderMessages();
+
+    // ===== AMap for wedding schedule =====
+    function renderAmap(id) {
+      new AMap.Map(id, {
+        center: [106.376173, 39.014563], // 石嘴山大武口经纬度
+        zoom: 15
+      });
+    }
+    renderAmap('amap1');
+    renderAmap('amap2');
   </script>
 </body>
 </html>
