@@ -289,7 +289,7 @@
     const dd = String(dateLabel.getDate()).padStart(2,'0');
     document.getElementById('wedding-date-label').textContent = `${yyyy}.${mm}.${dd}`;
 
-    // ===== Countdown =====
+    // ===== Countdown & Married Duration =====
     function rerenderCountdown(){
       const t = new Date(WEDDING_DATE).getTime() - Date.now();
       const clamp = (n)=> Math.max(0, n);
@@ -302,8 +302,31 @@
       document.getElementById('cd-mins').textContent  = mins;
       document.getElementById('cd-secs').textContent  = secs;
     }
+    function renderDuration() {
+      const now = new Date();
+      const weddingDate = new Date(WEDDING_DATE);
+      const marriedStart = new Date('2025-05-21T00:00:00+09:00');
+      const countdownEl = document.getElementById('countdown');
+      if (now < weddingDate) {
+        countdownEl.style.display = '';
+        document.getElementById('married-duration')?.remove();
+      } else {
+        countdownEl.style.display = 'none';
+        let diff = now - marriedStart;
+        let years = Math.floor(diff / (1000*60*60*24*365.2425));
+        let days = Math.floor((diff % (1000*60*60*24*365.2425)) / (1000*60*60*24));
+        let hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        let html = `<div id="married-duration" style="margin:24px 0 16px;font-size:20px;color:#e67aa8;font-weight:600">我们已经结婚${years>0?years+'年':''}${days}天${hours}小时</div>`;
+        if (!document.getElementById('married-duration')) {
+          countdownEl.insertAdjacentHTML('afterend', html);
+        } else {
+          document.getElementById('married-duration').innerHTML = `我们已经结婚${years>0?years+'年':''}${days}天${hours}小时`;
+        }
+      }
+    }
     rerenderCountdown();
-    setInterval(rerenderCountdown, 1000);
+    renderDuration();
+    setInterval(()=>{rerenderCountdown();renderDuration();}, 1000);
 
     // ===== Guestbook (Netlify Functions) =====
     async function fetchMessages() {
