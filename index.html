@@ -262,6 +262,7 @@
     </div>
   </footer>
 
+  <script src="https://webapi.amap.com/maps?v=2.0&key=384cf742c0a95d7e155dccabdc3b4fe0"></script>
   <script>
     // ===== Configurable Basics =====
     const WEDDING_DATE = '2025-10-01T11:00:00+09:00'; // 修改为你的婚礼时间（东京时区）
@@ -348,14 +349,16 @@
     renderMessages();
 
     // ===== AMap for wedding schedule =====
-    function renderAmap(id) {
-      new AMap.Map(id, {
-        center: [106.376173, 39.014563], // 石嘴山大武口经纬度
-        zoom: 15
-      });
+    window.onload = function() {
+      function renderAmap(id) {
+        new AMap.Map(id, {
+          center: [106.376173, 39.014563], // 石嘴山大武口经纬度
+          zoom: 15
+        });
+      }
+      renderAmap('amap1');
+      renderAmap('amap2');
     }
-    renderAmap('amap1');
-    renderAmap('amap2');
   </script>
 </body>
 </html>
