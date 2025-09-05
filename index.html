@@ -201,19 +201,10 @@
     <div class="container grid-2">
       <div class="card item">
         <div>
-          <span class="pill">住宿</span>
-          <h3>前一晚入住</h3>
-          <p class="note">时间：2025.10.01 12:00（1 晚）</p>
-          <p>地点：石嘴山·大武口·Sakura Hotel</p>
-        </div>
-        <div id="amap1" class="map" style="width:100%;height:220px;border-radius:12px"></div>
-      </div>
-      <div class="card item">
-        <div>
           <span class="pill">典礼</span>
           <h3>婚礼仪式 & 宴会</h3>
           <p class="note">时间：2025.10.02 11:00 – 14:00</p>
-          <p>地点：石嘴山·大武口</p>
+          <p>地点：银川立达深杭国际酒店</p>
         </div>
         <div id="amap2" class="map" style="width:100%;height:220px;border-radius:12px"></div>
       </div>
@@ -375,11 +366,10 @@
     window.onload = function() {
       function renderAmap(id) {
         new AMap.Map(id, {
-          center: [106.376173, 39.014563], // 石嘴山大武口经纬度
+          center: [106.2347, 38.4877], // 银川立达深杭国际酒店经纬度
           zoom: 15
         });
       }
-      renderAmap('amap1');
       renderAmap('amap2');
     }
   </script>
