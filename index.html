@@ -365,16 +365,16 @@
     // ===== AMap for wedding schedule =====
     window.onload = function() {
       var map = new AMap.Map('amap2', {
-        center: [106.234963, 38.487633], // 银川立达深杭国际酒店高德精确坐标
+        center: [106.28816853943466, 38.41831024964368], // 银川立达深杭国际酒店最新经纬度
         zoom: 15
       });
       var marker = new AMap.Marker({
-        position: [106.234963, 38.487633],
+        position: [106.28816853943466, 38.41831024964368],
         title: '银川立达深杭国际酒店'
       });
       map.add(marker);
       marker.on('click', function() {
-        window.open('https://uri.amap.com/navigation?to=106.234963,38.487633,银川立达深杭国际酒店', '_blank');
+        window.open('https://uri.amap.com/navigation?to=106.28816853943466,38.41831024964368,银川立达深杭国际酒店', '_blank');
       });
     }
   </script>
