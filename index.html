@@ -65,12 +65,10 @@
     /* Story timeline */
     .timeline{display:grid;gap:16px;position:relative}
     .timeline::before{content:"";position:absolute;left:calc(50% - 1px);top:0;bottom:0;width:2px;background:linear-gradient(#ffd7ea,#e67aa8,#ffd7ea);opacity:.5}
-    .tl{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
-    .tl:nth-child(even) .tl-card{grid-column:1/2}
-    .tl:nth-child(even) .tl-img{grid-column:2/3}
-    .tl-card{background:#fff;border:1px solid #f1d7e5;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
+    .tl{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
+    .tl-card{background:#fff;border:1px solid #f1d7e5;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);order:1}
+    .tl-img{order:2}
     .tl-date{font-size:12px;color:var(--muted)}
-    .tl-img{max-width:400px;width:100%} /* 修改：限制时间轴容器宽度 */
     .pill{display:inline-block;background:var(--ring);border:1px solid #f1d7e5;border-radius:999px;padding:4px 10px;margin-right:8px}
     /* Schedule */
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -173,7 +171,7 @@
         <p>一次回眸，一个笑容，一切就此开始。</p>
       </div>
       <div class="tl-img">
-        <img src="images/first.jpg" alt="meet"/>
+        <img src="images/first.jpg" alt="meet" class="big-photo"/>
       </div>
     </div>
     <div class="tl">
@@ -182,7 +180,7 @@
         <p>旅行、电影、深夜长谈，我们把彼此放进了生活的每一个角落。</p>
       </div>
       <div class="tl-img">
-        <img src="images/know.jpg" alt="know"/>
+        <img src="images/know.jpg" alt="know" class="big-photo"/>
       </div>
     </div>
     <div class="tl">
@@ -191,7 +189,7 @@
         <p>在亲友的见证下，我们许下携手一生的承诺。</p>
       </div>
       <div class="tl-img">
-        <video src="video/ding.mp4" autoplay muted loop></video>
+        <video src="video/ding.mp4" autoplay muted loop class="responsive-video"></video>
       </div>
     </div>
     <div class="tl">
@@ -200,7 +198,7 @@
         <p>一纸证书，一生约定，我们正式成为彼此的家人。</p>
       </div>
       <div class="tl-img">
-        <video src="video/zheng.mp4" autoplay muted loop></video>
+        <video src="video/zheng.mp4" autoplay muted loop class="responsive-video"></video>
       </div>
     </div>
     <div class="tl">
@@ -209,7 +207,7 @@
         <p>往后余生，不止有柴米油盐，还有浪漫和远方</p>
       </div>
       <div class="tl-img">
-        <img src="images/second.jpg" alt="keep"/>
+        <img src="images/second.jpg" alt="keep" class="big-photo"/>
       </div>
     </div>
   </div>
@@ -231,7 +229,7 @@
 </section>
 
 <section id="gallery" class="section">
-  <h2>相册</h2>
+  <h2>回响</h2>
   <div class="container gallery">
     <img src="images/one.jpg" alt="g1"/>
     <img src="images/two.jpg" alt="g2"/>
