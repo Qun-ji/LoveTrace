@@ -509,46 +509,67 @@
       <div class="tl-card">
         <span class="pill">相遇</span>
         <p>一次回眸，一个笑容，一切就此开始。</p>
+        <div class="tl-img">
+          <img src="http://t25q1354o.hb-bkt.clouddn.com/first.jpg" alt="meet" class="big-photo clickable" loading="lazy"/>
+        </div>
       </div>
-      <div class="tl-img">
-        <img src="http://t25q1354o.hb-bkt.clouddn.com/first.jpg" alt="meet" class="big-photo clickable" loading="lazy"/>
-      </div>
+
     </div>
     <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相知</span>
         <p>旅行、电影、深夜长谈，我们把彼此放进了生活的每一个角落。</p>
+        <div class="tl-img">
+          <img src="http://t25q1354o.hb-bkt.clouddn.com/know.jpg" alt="know" class="big-photo clickable" loading="lazy"/>
+        </div>
       </div>
-      <div class="tl-img">
-        <img src="http://t25q1354o.hb-bkt.clouddn.com/know.jpg" alt="know" class="big-photo clickable" loading="lazy"/>
-      </div>
+
     </div>
     <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相约</span>
         <p>在亲友的见证下，我们许下携手一生的承诺。</p>
+        <!-- 视频1 -->
+        <div class="video-wrapper" data-src="http://t25q1354o.hb-bkt.clouddn.com/ding.mp4">
+          <img src="http://t25q1354o.hb-bkt.clouddn.com/cover1.jpg"
+               alt="订婚视频封面"
+               style="width:100%;cursor:pointer;border-radius:12px;">
+          <div class="play-button"
+               style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+              font-size:48px;color:white;cursor:pointer;">▶</div>
+        </div>
+
       </div>
-      <div class="tl-img">
-        <video src="http://t25q1354o.hb-bkt.clouddn.com/ding.mp4"  muted  class="responsive-video clickable" loading="lazy"></video>
-      </div>
+
     </div>
     <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相依</span>
         <p>一纸证书，一生约定，我们正式成为彼此的家人。</p>
+
+
+        <!-- 视频2 -->
+        <div class="video-wrapper" data-src="http://t25q1354o.hb-bkt.clouddn.com/zheng.mp4">
+          <img src="http://t25q1354o.hb-bkt.clouddn.com/cover2.jpg"
+               alt="证婚视频封面"
+               style="width:100%;cursor:pointer;border-radius:12px;">
+          <div class="play-button"
+               style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+              font-size:48px;color:white;cursor:pointer;">▶</div>
+        </div>
+
       </div>
-      <div class="tl-img">
-        <video src="http://t25q1354o.hb-bkt.clouddn.com/zheng.mp4"  muted  class="responsive-video clickable" loading="lazy"></video>
-      </div>
+
     </div>
     <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相守</span>
         <p>往后余生，不止有柴米油盐，还有浪漫和远方</p>
+        <div class="tl-img">
+          <img src="http://t25q1354o.hb-bkt.clouddn.com/second.jpg" alt="keep" class="big-photo clickable" loading="lazy"/>
+        </div>
       </div>
-      <div class="tl-img">
-        <img src="http://t25q1354o.hb-bkt.clouddn.com/second.jpg" alt="keep" class="big-photo clickable" loading="lazy"/>
-      </div>
+
     </div>
   </div>
 </section>
@@ -628,6 +649,19 @@
   </div>
 
   <script>
+
+    document.querySelectorAll(".video-wrapper").forEach(wrapper => {
+      wrapper.style.position = "relative"; // 确保按钮能居中覆盖
+      wrapper.addEventListener("click", function() {
+        const videoSrc = this.getAttribute("data-src");
+        this.innerHTML = `
+        <video src="${videoSrc}" controls autoplay
+               style="width:100%;border-radius:12px;"></video>
+      `;
+      });
+    });
+
+
     // ===== Interactive celebration functions =====
     function createConfetti() {
       const celebration = document.createElement('div');
