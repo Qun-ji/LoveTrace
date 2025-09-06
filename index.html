@@ -695,9 +695,13 @@
       const counter = document.getElementById('blessing-counter');
       const countSpan = document.getElementById('blessing-count');
       
-      if (count > 0) {
-        counter.style.display = 'block';
-        countSpan.textContent = count;
+      if (counter && countSpan) {
+        if (count > 0) {
+          counter.style.display = 'block';
+          countSpan.textContent = count;
+        } else {
+          counter.style.display = 'none';
+        }
       }
     }
     
@@ -705,7 +709,7 @@
       const recentDiv = document.getElementById('recent-blessings');
       const listDiv = document.getElementById('recent-blessings-list');
       
-      if (messages.length > 0) {
+      if (recentDiv && listDiv && messages.length > 0) {
         recentDiv.style.display = 'block';
         const recentMessages = messages.slice(0, 3); // 显示最新3条
         
@@ -999,10 +1003,6 @@
       const list = await fetchMessages();
       console.log('Messages loaded:', list);
       
-      // 更新祝福计数器和最新祝福
-      updateBlessingCounter(list.length);
-      updateRecentBlessings(list);
-      
       if(!list.length){ 
         host.innerHTML = `
           <p class="note">目前还没有留言，快来写下第一条祝福吧！</p>
@@ -1034,9 +1034,11 @@
         `).join('')}
       `;
       
-      // 重新更新计数器和最新祝福
-      updateBlessingCounter(list.length);
-      updateRecentBlessings(list);
+      // 更新计数器和最新祝福（延迟执行确保DOM更新完成）
+      setTimeout(() => {
+        updateBlessingCounter(list.length);
+        updateRecentBlessings(list);
+      }, 100);
     }
     document.getElementById('gb-form').addEventListener('submit', async e=>{
       e.preventDefault();
