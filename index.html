@@ -918,22 +918,86 @@
 
   // ===== Guestbook (Netlify Functions) =====
   async function fetchMessages() {
-    const res = await fetch('/.netlify/functions/guestbook-list');
-    return res.ok ? await res.json() : [];
+    try {
+      const res = await fetch('/.netlify/functions/guestbook-list');
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Fetched messages from database:', data);
+        return data;
+      } else {
+        console.error('Failed to fetch messages from database:', res.status, res.statusText);
+        // Fallback to localStorage
+        return getLocalMessages();
+      }
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      // Fallback to localStorage
+      return getLocalMessages();
+    }
+  }
+  
+  function getLocalMessages() {
+    try {
+      const localMessages = JSON.parse(localStorage.getItem('wedding_guestbook_local') || '[]');
+      console.log('Using local messages:', localMessages);
+      return localMessages;
+    } catch (error) {
+      console.error('Error reading local messages:', error);
+      return [];
+    }
+  }
+  
+  function saveLocalMessage(message) {
+    try {
+      const localMessages = getLocalMessages();
+      localMessages.push({
+        ...message,
+        created_at: new Date().toISOString()
+      });
+      localStorage.setItem('wedding_guestbook_local', JSON.stringify(localMessages));
+      console.log('Saved message locally:', message);
+    } catch (error) {
+      console.error('Error saving local message:', error);
+    }
   }
   async function submitMessage(data) {
-    const res = await fetch('/.netlify/functions/submit-guestbook', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    return await res.json();
+    try {
+      const res = await fetch('/.netlify/functions/submit-guestbook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      if (res.ok) {
+        const result = await res.json();
+        console.log('Message submitted to database:', result);
+        return result;
+      } else {
+        console.error('Failed to submit to database:', res.status, res.statusText);
+        // Fallback to local storage
+        saveLocalMessage(data);
+        return { success: true, message: 'Message saved locally' };
+      }
+    } catch (error) {
+      console.error('Error submitting message:', error);
+      // Fallback to local storage
+      saveLocalMessage(data);
+      return { success: true, message: 'Message saved locally' };
+    }
   }
   function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
     async function renderMessages() {
       const host = document.getElementById('gb-list');
+      if (!host) {
+        console.error('gb-list element not found');
+        return;
+      }
+      
       host.innerHTML = '<p class="note">加载中...</p>';
+      console.log('Loading messages...');
+      
       const list = await fetchMessages();
+      console.log('Messages loaded:', list);
       
       // 更新祝福计数器和最新祝福
       updateBlessingCounter(list.length);
@@ -1008,8 +1072,7 @@
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
     });
-  renderMessages();
-
+  
   // ===== AMap for wedding schedule =====
   window.onload = function() {
     var map = new AMap.Map('amap2', {
@@ -1024,6 +1087,9 @@
     marker.on('click', function() {
       window.open('https://uri.amap.com/navigation?to=106.28816853943466,38.41831024964368,银川立达深杭国际酒店', '_blank');
     });
+    
+    // 初始化留言板
+    renderMessages();
   }
 </script>
 </body>
