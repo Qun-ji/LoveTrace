@@ -390,20 +390,7 @@
         <p>一纸证书，一生约定，我们正式成为彼此的家人。</p>
       </div>
       <div class="tl-img">
-        <video
-                id="myVideo"
-                autoplay
-                muted
-                loop
-                playsinline
-                webkit-playsinline
-                x5-video-player-type="h5-page"
-                class="responsive-video clickable"
-                preload="auto"
-        >
-          <source src="video/zheng.mp4" type="video/mp4">
-          您的浏览器不支持视频播放。
-        </video>
+        <video src="video/zheng.mp4" autoplay muted loop class="responsive-video clickable" loading="lazy"></video>
       </div>
     </div>
     <div class="tl fade-in">
@@ -412,22 +399,8 @@
         <p>往后余生，不止有柴米油盐，还有浪漫和远方</p>
       </div>
       <div class="tl-img">
-        <video
-                id="myVideo"
-                autoplay
-                muted
-                loop
-                playsinline
-                webkit-playsinline
-                x5-video-player-type="h5-page"
-                class="responsive-video clickable"
-                preload="auto"
-        >
-          <source src="video/zheng.mp4" type="video/mp4">
-          您的浏览器不支持视频播放。
-        </video>
+        <img src="images/second.jpg" alt="keep" class="big-photo clickable" loading="lazy"/>
       </div>
-
     </div>
   </div>
 </section>
@@ -580,7 +553,7 @@
             entry.target.classList.add('visible');
           }
         });
-      }, {threshold: 0.1});
+      }, { threshold: 0.1 });
 
       animatedElements.forEach(el => animationObserver.observe(el));
     }
@@ -593,7 +566,7 @@
 
     // Add click event to all clickable images and videos
     document.querySelectorAll('.clickable').forEach(element => {
-      element.addEventListener('click', function () {
+      element.addEventListener('click', function() {
         if (this.tagName === 'IMG') {
           modalImg.src = this.src;
           modalImg.style.display = 'block';
@@ -608,13 +581,13 @@
     });
 
     // Close modal when clicking close button
-    closeBtn.onclick = function () {
+    closeBtn.onclick = function() {
       modal.style.display = 'none';
       modalVideo.pause();
     };
 
     // Close modal when clicking outside
-    modal.onclick = function (event) {
+    modal.onclick = function(event) {
       if (event.target === modal) {
         modal.style.display = 'none';
         modalVideo.pause();
@@ -622,7 +595,7 @@
     };
 
     // Close modal with Escape key
-    document.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', function(event) {
       if (event.key === 'Escape') {
         modal.style.display = 'none';
         modalVideo.pause();
@@ -630,165 +603,133 @@
     });
 
     // Initialize everything when page loads
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       initLazyLoading();
       initScrollAnimations();
     });
 
     // ===== Configurable Basics =====
-    const WEDDING_DATE = '2025-10-01T11:00:00+09:00';
-    const COUPLE = {groom: '张鑫', bride: '贾玉洁'};
+  const WEDDING_DATE = '2025-10-01T11:00:00+09:00';
+  const COUPLE = { groom: '张鑫', bride: '贾玉洁' };
 
-    // ===== Smooth anchor scroll =====
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href');
-        const el = document.querySelector(id);
-        if (el) {
-          e.preventDefault();
-          el.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-      });
+  // ===== Smooth anchor scroll =====
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      const el = document.querySelector(id);
+      if(el){
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      }
     });
+  });
 
-    // ===== Initialize names/date label =====
-    document.getElementById('groom-name').textContent = COUPLE.groom;
-    document.getElementById('bride-name').textContent = COUPLE.bride;
-    const dateLabel = new Date(WEDDING_DATE);
-    const yyyy = dateLabel.getFullYear();
-    const mm = String(dateLabel.getMonth() + 1).padStart(2, '0');
-    const dd = String(dateLabel.getDate()).padStart(2, '0');
-    document.getElementById('wedding-date-label').textContent = `${yyyy}.${mm}.${dd}`;
+  // ===== Initialize names/date label =====
+  document.getElementById('groom-name').textContent = COUPLE.groom;
+  document.getElementById('bride-name').textContent = COUPLE.bride;
+  const dateLabel = new Date(WEDDING_DATE);
+  const yyyy = dateLabel.getFullYear();
+  const mm = String(dateLabel.getMonth()+1).padStart(2,'0');
+  const dd = String(dateLabel.getDate()).padStart(2,'0');
+  document.getElementById('wedding-date-label').textContent = `${yyyy}.${mm}.${dd}`;
 
-    // ===== Countdown & Married Duration =====
-    function rerenderCountdown() {
-      const t = new Date(WEDDING_DATE).getTime() - Date.now();
-      const clamp = (n) => Math.max(0, n);
-      const days = clamp(Math.floor(t / (1000 * 60 * 60 * 24)));
-      const hours = clamp(Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-      const mins = clamp(Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)));
-      const secs = clamp(Math.floor((t % (1000 * 60)) / 1000));
-      document.getElementById('cd-days').textContent = days;
-      document.getElementById('cd-hours').textContent = hours;
-      document.getElementById('cd-mins').textContent = mins;
-      document.getElementById('cd-secs').textContent = secs;
-    }
-
-    function renderDuration() {
-      const now = new Date();
-      const weddingDate = new Date(WEDDING_DATE);
-      const marriedStart = new Date('2025-05-21T00:00:00+09:00');
-      const countdownEl = document.getElementById('countdown');
-      if (now < weddingDate) {
-        countdownEl.style.display = '';
-        document.getElementById('married-duration')?.remove();
+  // ===== Countdown & Married Duration =====
+  function rerenderCountdown(){
+    const t = new Date(WEDDING_DATE).getTime() - Date.now();
+    const clamp = (n)=> Math.max(0, n);
+    const days   = clamp(Math.floor(t / (1000*60*60*24)));
+    const hours  = clamp(Math.floor((t%(1000*60*60*24))/(1000*60*60)));
+    const mins   = clamp(Math.floor((t%(1000*60*60))/(1000*60)));
+    const secs   = clamp(Math.floor((t%(1000*60))/1000));
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = hours;
+    document.getElementById('cd-mins').textContent  = mins;
+    document.getElementById('cd-secs').textContent  = secs;
+  }
+  function renderDuration() {
+    const now = new Date();
+    const weddingDate = new Date(WEDDING_DATE);
+    const marriedStart = new Date('2025-05-21T00:00:00+09:00');
+    const countdownEl = document.getElementById('countdown');
+    if (now < weddingDate) {
+      countdownEl.style.display = '';
+      document.getElementById('married-duration')?.remove();
+    } else {
+      countdownEl.style.display = 'none';
+      let diff = now - marriedStart;
+      let years = Math.floor(diff / (1000*60*60*24*365.2425));
+      let days = Math.floor((diff % (1000*60*60*24*365.2425)) / (1000*60*60*24));
+      let hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      let html = `<div id="married-duration" style="margin:24px 0 16px;font-size:20px;color:#e67aa8;font-weight:600">我们已经结婚${years>0?years+'年':''}${days}天${hours}小时</div>`;
+      if (!document.getElementById('married-duration')) {
+        countdownEl.insertAdjacentHTML('afterend', html);
       } else {
-        countdownEl.style.display = 'none';
-        let diff = now - marriedStart;
-        let years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.2425));
-        let days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.2425)) / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let html = `<div id="married-duration" style="margin:24px 0 16px;font-size:20px;color:#e67aa8;font-weight:600">我们已经结婚${years > 0 ? years + '年' : ''}${days}天${hours}小时</div>`;
-        if (!document.getElementById('married-duration')) {
-          countdownEl.insertAdjacentHTML('afterend', html);
-        } else {
-          document.getElementById('married-duration').innerHTML = `我们已经结婚${years > 0 ? years + '年' : ''}${days}天${hours}小时`;
-        }
+        document.getElementById('married-duration').innerHTML = `我们已经结婚${years>0?years+'年':''}${days}天${hours}小时`;
       }
     }
+  }
+  rerenderCountdown();
+  renderDuration();
+  setInterval(()=>{rerenderCountdown();renderDuration();}, 1000);
 
-    rerenderCountdown();
-    renderDuration();
-    setInterval(() => {
-      rerenderCountdown();
-      renderDuration();
-    }, 1000);
-
-    // ===== Guestbook (Netlify Functions) =====
-    async function fetchMessages() {
-      const res = await fetch('/.netlify/functions/guestbook-list');
-      return res.ok ? await res.json() : [];
-    }
-
-    async function submitMessage(data) {
-      const res = await fetch('/.netlify/functions/submit-guestbook', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-      });
-      return await res.json();
-    }
-
-    function escapeHtml(s) {
-      return s.replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[c]));
-    }
-
-    async function renderMessages() {
-      const host = document.getElementById('gb-list');
-      host.innerHTML = '<p class="note">加载中...</p>';
-      const list = await fetchMessages();
-      if (!list.length) {
-        host.innerHTML = '<p class="note">目前还没有留言，快来写下第一条祝福吧！</p>';
-        return;
-      }
-      host.innerHTML = list.map(m => `
+  // ===== Guestbook (Netlify Functions) =====
+  async function fetchMessages() {
+    const res = await fetch('/.netlify/functions/guestbook-list');
+    return res.ok ? await res.json() : [];
+  }
+  async function submitMessage(data) {
+    const res = await fetch('/.netlify/functions/submit-guestbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return await res.json();
+  }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+  async function renderMessages() {
+    const host = document.getElementById('gb-list');
+    host.innerHTML = '<p class="note">加载中...</p>';
+    const list = await fetchMessages();
+    if(!list.length){ host.innerHTML = '<p class="note">目前还没有留言，快来写下第一条祝福吧！</p>'; return; }
+    host.innerHTML = list.map(m=> `
         <div class="msg">
           <strong>${escapeHtml(m.name)}</strong> <span class="note">· ${new Date(m.created_at).toLocaleString()}</span>
-          <div>${escapeHtml(m.message).replace(/\n/g, '<br/>')}</div>
+          <div>${escapeHtml(m.message).replace(/\n/g,'<br/>')}</div>
           ${m.attending ? '<div class="pill" style="margin-top:8px;display:inline-block">出席</div>' : ''}
         </div>
       `).join('');
+  }
+  document.getElementById('gb-form').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const name = document.getElementById('gb-name').value.trim();
+    const message  = document.getElementById('gb-msg').value.trim();
+    const attending = document.getElementById('gb-attend').checked;
+    if(!name || !message){ alert('请填写名字与留言'); return; }
+    const result = await submitMessage({name, message, attending});
+    if(result.success){
+      e.target.reset();
+      renderMessages();
+    }else{
+      alert('提交失败：' + (result.error || '未知错误'));
     }
+  });
+  renderMessages();
 
-    document.getElementById('gb-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const name = document.getElementById('gb-name').value.trim();
-      const message = document.getElementById('gb-msg').value.trim();
-      const attending = document.getElementById('gb-attend').checked;
-      if (!name || !message) {
-        alert('请填写名字与留言');
-        return;
-      }
-      const result = await submitMessage({name, message, attending});
-      if (result.success) {
-        e.target.reset();
-        renderMessages();
-      } else {
-        alert('提交失败：' + (result.error || '未知错误'));
-      }
+  // ===== AMap for wedding schedule =====
+  window.onload = function() {
+    var map = new AMap.Map('amap2', {
+      center: [106.28816853943466, 38.41831024964368],
+      zoom: 15
     });
-    renderMessages();
-
-    // ===== AMap for wedding schedule =====
-    window.onload = function () {
-      var map = new AMap.Map('amap2', {
-        center: [106.28816853943466, 38.41831024964368],
-        zoom: 15
-      });
-      var marker = new AMap.Marker({
-        position: [106.28816853943466, 38.41831024964368],
-        title: '银川立达深杭国际酒店'
-      });
-      map.add(marker);
-      marker.on('click', function () {
-        window.open('https://uri.amap.com/navigation?to=106.28816853943466,38.41831024964368,银川立达深杭国际酒店', '_blank');
-      });
-    }
-      function playVideo() {
-      const video = document.getElementById("myVideo");
-      if (video && video.paused) {
-      video.play().catch(err => {
-      console.log("视频播放失败：", err);
+    var marker = new AMap.Marker({
+      position: [106.28816853943466, 38.41831024964368],
+      title: '银川立达深杭国际酒店'
     });
-    }
-    }
-
-      // 微信环境下，等 WeixinJSBridge 就绪再尝试播放
-      document.addEventListener("WeixinJSBridgeReady", playVideo, false);
-
-      // 普通浏览器里，用户第一次点击/触摸页面时触发播放
-      document.addEventListener("touchstart", playVideo, {once: true});
-
+    map.add(marker);
+    marker.on('click', function() {
+      window.open('https://uri.amap.com/navigation?to=106.28816853943466,38.41831024964368,银川立达深杭国际酒店', '_blank');
+    });
+  }
 </script>
 </body>
 </html>
