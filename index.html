@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>我们结婚啦 · Wedding</title>
+  <title>LoveTrace</title>
   <meta name="description" content="一页式婚礼纪念网站：倒计时、我们的故事、婚礼安排、相册与留言板。" />
   <meta property="og:title" content="我们结婚啦 · Wedding" />
   <meta property="og:description" content="一页式婚礼纪念网站：倒计时、我们的故事、婚礼安排、相册与留言板。" />
@@ -14,33 +14,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#fff8fb;
-      --card:#ffffff;
-      --ink:#3b3054;
-      --muted:#6b607f;
-      --primary:#e67aa8;
-      --primary-2:#f4cde1;
-      --ring:#ffd7ea;
+      --bg:#fff8fb; --card:#ffffff; --ink:#3b3054; --muted:#6b607f;
+      --primary:#e67aa8; --primary-2:#f4cde1; --ring:#ffd7ea;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
     a{color:var(--primary);text-decoration:none}
-    img{max-width:100%;display:block}
+    img, video{max-width:100%; height:auto; display:block; border-radius:12px; cursor:pointer;}
     .container{width:min(1100px,92%);margin-inline:auto}
-    header.nav{
-      position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(6px);
-      background:color-mix(in oklab, white 70%, var(--primary-2) 30% / 60%);
-      border-bottom:1px solid #f0e3ea;
-    }
+    header.nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(6px);background:color-mix(in oklab, white 70%, var(--primary-2) 30% / 60%);border-bottom:1px solid #f0e3ea;}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
     .brand{font-family:"Great Vibes", cursive;font-size:28px;color:var(--primary);letter-spacing:.5px}
     .nav a{padding:8px 12px;border-radius:999px}
     .nav a:hover{background:var(--ring)}
-    .hero{
-      position:relative;isolation:isolate;overflow:hidden;
-      background: radial-gradient(1200px 600px at 10% -20%, #ffeaf3, transparent 60%),
-                  radial-gradient(1200px 600px at 90% -10%, #fff0f7, transparent 60%);
-    }
+    .hero{position:relative;isolation:isolate;overflow:hidden;background: radial-gradient(1200px 600px at 10% -20%, #ffeaf3, transparent 60%), radial-gradient(1200px 600px at 90% -10%, #fff0f7, transparent 60%);}
     .hero .inner{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:64px 0}
     .hero h1{font-family:"Great Vibes", cursive;font-size:64px;margin:0 0 8px}
     .date{display:inline-flex;gap:6px;align-items:center;padding:6px 12px;border:1px dashed var(--primary);border-radius:999px;color:var(--primary);background:#fff}
@@ -51,332 +38,211 @@
     .cta{display:flex;gap:12px;flex-wrap:wrap}
     .btn{border:1px solid var(--primary);background:var(--primary);color:#fff;padding:10px 16px;border-radius:12px;cursor:pointer;font-weight:600}
     .btn.ghost{background:#fff;color:var(--primary)}
-    .ring{position:absolute;inset:auto -120px -140px auto;width:420px;height:420px;background:
-      radial-gradient(closest-side, color-mix(in oklab, var(--primary-2) 70%, white 30%) , transparent 70%);
-      border-radius:50%;filter:blur(10px);opacity:.6;z-index:-1}
+    .ring{position:absolute;inset:auto -120px -140px auto;width:420px;height:420px;background:radial-gradient(closest-side, color-mix(in oklab, var(--primary-2) 70%, white 30%) , transparent 70%);border-radius:50%;filter:blur(10px);opacity:.6;z-index:-1}
     .section{padding:56px 0}
     .section h2{font-family:"Great Vibes", cursive;font-size:40px;text-align:center;margin:0 0 24px;color:#c35888}
     .card{background:var(--card);border:1px solid #f1d7e5;border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
-    /* Couple */
     .couple{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     .person{display:grid;grid-template-columns:100px 1fr;gap:16px;align-items:center}
     .avatar{width:100px;height:100px;border-radius:50%;overflow:hidden;border:4px solid var(--primary-2);}
     blockquote{margin:0;background:linear-gradient(180deg,#fff, #fff6fb);border:1px solid #f2dbe8;padding:16px;border-radius:14px;color:#734361}
-    /* Story timeline */
     .timeline{display:grid;gap:16px;position:relative}
     .timeline::before{content:"";position:absolute;left:calc(50% - 1px);top:0;bottom:0;width:2px;background:linear-gradient(#ffd7ea,#e67aa8,#ffd7ea);opacity:.5}
-    .tl{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
-    .tl:nth-child(even) .tl-card{grid-column:1/2}
-    .tl:nth-child(even) .tl-img{grid-column:2/3}
-    .tl-card{background:#fff;border:1px solid #f1d7e5;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    .tl-date{font-size:12px;color:var(--muted)}
+    .tl{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+    .tl-card{background:#fff;border:1px solid #f1d7e5;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);margin-bottom:8px}
+    .tl-img{max-width:400px;width:100%;justify-self:center;}
     .pill{display:inline-block;background:var(--ring);border:1px solid #f1d7e5;border-radius:999px;padding:4px 10px;margin-right:8px}
-    /* Schedule */
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     .schedule .item{display:grid;grid-template-columns:1fr;gap:12px}
     iframe.map{width:100%;height:220px;border:0;border-radius:12px}
-    /* Gallery */
     .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .gallery img{border-radius:12px;transition:transform .25s ease, box-shadow .25s}
-    .gallery img:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.12)}
-    /* Guestbook */
+    .gallery img, .gallery video{width:100%; height:auto; border-radius:12px;}
+    .gallery img:hover, .gallery video:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.12)}
     .guestbook{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     .input{width:100%;padding:10px 12px;border:1px solid #e9d3e1;border-radius:12px;background:#fff}
     .note{font-size:12px;color:var(--muted)}
-    .msg{border:1px solid #f1d7e5;border-radius:14px;padding:12px;margin-bottom:10px;background:#fff}
-    /* Footer */
+    .msg{border:1px solid #f1d3e5;border-radius:14px;padding:12px;margin-bottom:10px;background:#fff}
     footer{padding:28px 0;color:#7a6a86;text-align:center;border-top:1px solid #f2e5ec;margin-top:28px}
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero .inner{grid-template-columns:1fr}
-      .couple, .grid-2, .guestbook{grid-template-columns:1fr}
-      .timeline::before{left:10px}
-      .tl{grid-template-columns:1fr;gap:10px;padding-left:20px}
-      .tl .tl-img{order:2}
-      .gallery{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width: 520px){
-      .gallery{grid-template-columns:1fr}
-      .hero h1{font-size:46px}
-    }
+    #lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:none;justify-content:center;align-items:center;z-index:9999;}
+    #lightbox img,#lightbox video{max-width:90%;max-height:90%;border-radius:12px;}
+    @media(max-width:900px){.hero .inner{grid-template-columns:1fr}.couple,.grid-2,.guestbook{grid-template-columns:1fr}.timeline::before{left:10px}.tl{grid-template-columns:1fr;gap:10px;padding-left:20px}.gallery{grid-template-columns:repeat(2,1fr)}.tl-img{max-width:100%;}}
+    @media(max-width:520px){.gallery{grid-template-columns:1fr}.hero h1{font-size:46px}.tl-img{max-width:100%}.gallery img,.gallery video{width:100%;height:auto}}
   </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="container nav-inner">
-      <div class="brand">Qun & Partner</div>
-      <nav class="nav-links">
-        <a href="#home">首页</a>
-        <a href="#couple">我们</a>
-        <a href="#story">故事</a>
-        <a href="#schedule">安排</a>
-        <a href="#gallery">相册</a>
-        <a href="#guestbook">留言</a>
-      </nav>
-    </div>
-  </header>
 
-  <main id="home" class="hero">
-    <div class="container inner">
+<header class="nav">
+  <div class="container nav-inner">
+    <div class="brand">Two Souls, One Story</div>
+    <nav class="nav-links">
+      <a href="#home">首页</a>
+      <a href="#couple">我们</a>
+      <a href="#story">故事</a>
+      <a href="#schedule">安排</a>
+      <a href="#gallery">相册</a>
+      <a href="#guestbook">留言</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home" class="hero">
+  <div class="container inner">
+    <div>
+      <div class="date">婚礼日期 · <span id="wedding-date-label">2025.10.01</span></div>
+      <h1>我们结婚啦</h1>
+      <p class="lead">铭记曾经的悸动和未来的承诺</p>
+      <div class="countdown" id="countdown">
+        <div class="cd-box"><div class="cd-num" id="cd-days">0</div><div class="cd-lbl">天</div></div>
+        <div class="cd-box"><div class="cd-num" id="cd-hours">0</div><div class="cd-lbl">小时</div></div>
+        <div class="cd-box"><div class="cd-num" id="cd-mins">0</div><div class="cd-lbl">分钟</div></div>
+        <div class="cd-box"><div class="cd-num" id="cd-secs">0</div><div class="cd-lbl">秒</div></div>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#schedule">查看婚礼安排</a>
+        <a class="btn ghost" href="#guestbook">爱的碎碎念</a>
+      </div>
+    </div>
+    <div class="card"><img src="images/head.jpg" alt="hero"/></div>
+  </div>
+  <div class="ring"></div>
+</main>
+
+<section id="couple" class="section">
+  <h2>命中注定的两个人</h2>
+  <div class="container couple">
+    <div class="card person">
+      <div class="avatar"><img src="images/touxiang2.jpg" alt="groom"/></div>
       <div>
-        <div class="date">婚礼日期 · <span id="wedding-date-label">2025.10.01</span></div>
-        <h1>我们结婚啦</h1>
-        <p class="lead">诚邀亲友共见证我们的爱情。期待在美好的日子与您相聚。</p>
-        <div class="countdown" id="countdown">
-          <div class="cd-box"><div class="cd-num" id="cd-days">0</div><div class="cd-lbl">天</div></div>
-          <div class="cd-box"><div class="cd-num" id="cd-hours">0</div><div class="cd-lbl">小时</div></div>
-          <div class="cd-box"><div class="cd-num" id="cd-mins">0</div><div class="cd-lbl">分钟</div></div>
-          <div class="cd-box"><div class="cd-num" id="cd-secs">0</div><div class="cd-lbl">秒</div></div>
-        </div>
-        <div class="cta">
-          <a class="btn" href="#schedule">查看婚礼安排</a>
-          <a class="btn ghost" href="#guestbook">签个到 & 留言</a>
-        </div>
-      </div>
-      <div class="card">
-        <img alt="hero" src="images/head.jpg" />
+        <h3>新郎 · <span id="groom-name">张鑫</span></h3>
+        <blockquote>“我有三样东西不可或缺：水、空气，以及右边那个女孩。”</blockquote>
       </div>
     </div>
-    <div class="ring"></div>
-  </main>
-
-  <section id="couple" class="section">
-    <h2>新郎 · 新娘</h2>
-    <div class="container couple">
-      <div class="card person">
-        <div class="avatar"><img src="images/touxiang2.jpg" alt="groom"/></div>
-        <div>
-          <h3>新郎 · <span id="groom-name">张鑫</span></h3>
-          <blockquote>“我有三样东西不可或缺：水、空气，以及右边那个女孩。”</blockquote>
-        </div>
-      </div>
-      <div class="card person">
-        <div class="avatar"><img src="images/touxiang2.jpg" alt="Bride"/></div>
-        <div>
-          <h3>新娘 · <span id="bride-name">贾玉洁</span></h3>
-          <blockquote>“我有三样东西不可或缺：水、空气，以及左边那个男孩。”</blockquote>
-        </div>
+    <div class="card person">
+      <div class="avatar"><img src="images/touxiang2.jpg" alt="Bride"/></div>
+      <div>
+        <h3>新娘 · <span id="bride-name">贾玉洁</span></h3>
+        <blockquote>“我有三样东西不可或缺：水、空气，以及左边那个男孩。”</blockquote>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="story" class="section">
-    <h2>我们的故事</h2>
-    <div class="container timeline">
-      <div class="tl">
-        <div class="tl-card">
-          <span class="pill">相遇</span>
-          <div class="tl-date">2022.04.18</div>
-          <p>在春天的校园里第一次相遇，他的目光与她的笑恰好撞了个满怀。</p>
-        </div>
-        <div class="tl-img">
-          <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed?q=80&w=1200&auto=format&fit=crop" alt="meet"/>
-        </div>
-      </div>
-      <div class="tl">
-        <div class="tl-card">
-          <span class="pill">相知</span>
-          <div class="tl-date">2023.01.14</div>
-          <p>旅行、电影、深夜长谈，我们把彼此放进了生活的每一个角落。</p>
-        </div>
-        <div class="tl-img">
-          <img src="https://images.unsplash.com/photo-1510751007277-36932aac9ebd?q=80&w=1200&auto=format&fit=crop" alt="know"/>
-        </div>
-      </div>
-      <div class="tl">
-        <div class="tl-card">
-          <span class="pill">相守</span>
-          <div class="tl-date">2024.12.31</div>
-          <p>决定把余生也交给对方：柴米油盐，也要鲜花玫瑰。</p>
-        </div>
-        <div class="tl-img">
-          <img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?q=80&w=1200&auto=format&fit=crop" alt="keep"/>
-        </div>
-      </div>
+<section id="story" class="section">
+  <h2>心动轨迹</h2>
+  <div class="container timeline">
+    <div class="tl">
+      <div class="tl-card"><span class="pill">相遇</span><p>一次回眸，一个笑容，一切就此开始。</p></div>
+      <div class="tl-img"><img src="images/first.jpg" alt="meet"/></div>
     </div>
-  </section>
+    <div class="tl">
+      <div class="tl-card"><span class="pill">相知</span><p>旅行、电影、深夜长谈，我们把彼此放进了生活的每一个角落。</p></div>
+      <div class="tl-img"><img src="images/know.jpg" alt="know"/></div>
+    </div>
+    <div class="tl">
+      <div class="tl-card"><span class="pill">相约</span><p>在亲友的见证下，我们许下携手一生的承诺。</p></div>
+      <div class="tl-img"><video src="video/ding.mp4" autoplay muted loop playsinline></video></div>
+    </div>
+    <div class="tl">
+      <div class="tl-card"><span class="pill">相依</span><p>一纸证书，一生约定，我们正式成为彼此的家人。</p></div>
+      <div class="tl-img"><video src="video/zheng.mp4" autoplay muted loop playsinline></video></div>
+    </div>
+    <div class="tl">
+      <div class="tl-card"><span class="pill">相守</span><p>往后余生，不止有柴米油盐，还有浪漫和远方</p></div>
+      <div class="tl-img"><img src="images/second.jpg" alt="keep"/></div>
+    </div>
+  </div>
+</section>
 
-  <section id="schedule" class="section schedule">
-    <h2>婚礼安排</h2>
-    <div class="container grid-2">
-      <div class="card item">
-        <div>
-          <span class="pill">典礼</span>
-          <h3>婚礼仪式 & 宴会</h3>
-          <p class="note">时间：2025.10.02 11:00 – 14:00</p>
-          <p>地点：银川立达深杭国际酒店</p>
+<section id="schedule" class="section schedule">
+  <h2>婚礼安排</h2>
+  <div class="container grid-2">
+    <div class="card item">
+      <div>
+        <span class="pill">典礼</span>
+        <h3>婚礼仪式 & 宴会</h3>
+        <p class="note">时间：2025.10.02 11:00 – 14:00⏰</p>
+        <p>地点：银川立达深杭国际酒店📍</p>
+      </div>
+      <div id="amap2" class="map" style="width:100%;height:220px;border-radius:12px"></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="section">
+  <h2>相册</h2>
+  <div class="container gallery">
+    <img src="images/one.jpg" alt="g1"/>
+    <img src="images/two.jpg" alt="g2"/>
+    <img src="images/three.jpg" alt="g3"/>
+    <img src="images/four.jpg" alt="g4"/>
+    <img src="images/five.jpg" alt="g5"/>
+    <img src="images/six.jpg" alt="g6"/>
+  </div>
+</section>
+
+<section id="guestbook" class="section">
+  <h2>爱的碎碎念</h2>
+  <div class="container guestbook">
+    <div class="card">
+      <form id="gb-form" autocomplete="off">
+        <div style="display:grid;gap:10px">
+          <input class="input" id="gb-name" placeholder="写上你的名字，让我们记住你的甜蜜 ❤️" required/>
+          <textarea class="input" id="gb-msg" rows="4" placeholder="偷偷说点小心事，或者大大的祝福都可以 😉" required></textarea>
+          <label class="note"><input type="checkbox" id="gb-attend"/> 出席（RSVP）</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit">提交</button></div>
+          <p class="note">提示：留言将实时提交到云端数据库，所有宾客可见。</p>
         </div>
-        <div id="amap2" class="map" style="width:100%;height:220px;border-radius:12px"></div>
-      </div>
+      </form>
     </div>
-  </section>
+    <div class="card" id="gb-list"></div>
+  </div>
+</section>
 
-  <section id="gallery" class="section">
-    <h2>相册</h2>
-    <div class="container gallery">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="g1"/>
-      <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=800&auto=format&fit=crop" alt="g2"/>
-      <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=800&auto=format&fit=crop" alt="g3"/>
-      <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop" alt="g4"/>
-      <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=800&auto=format&fit=crop" alt="g5"/>
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="g6"/>
-    </div>
-  </section>
+<footer>
+  <div class="container">
+    <small>© 2025 LoveTrace · Crafted with ♥ · by Qunji <a href="#home">返回顶部</a></small>
+  </div>
+</footer>
 
-  <section id="guestbook" class="section">
-    <h2>宾客留言</h2>
-    <div class="container guestbook">
-      <div class="card">
-        <form id="gb-form" autocomplete="off">
-          <div style="display:grid;gap:10px">
-            <input class="input" id="gb-name" placeholder="您的名字 *" required />
-            <textarea class="input" id="gb-msg" rows="4" placeholder="写下祝福与留言 *" required></textarea>
-            <label class="note"><input type="checkbox" id="gb-attend" /> 出席（RSVP）</label>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <button class="btn" type="submit">提交</button>
-              <button class="btn ghost" type="button" id="gb-clear">清空本地留言</button>
-              <button class="btn ghost" type="button" id="gb-export">导出为 JSON</button>
-            </div>
-            <p class="note">提示：留言将实时提交到云端数据库，所有宾客可见。</p>
-          </div>
-        </form>
-      </div>
-      <div class="card" id="gb-list">
-        <!-- messages render here -->
-      </div>
-    </div>
-  </section>
+<div id="lightbox" onclick="this.style.display='none'"><img id="lb-img"><video id="lb-video" controls></video></div>
 
-  <footer>
-    <div class="container">
-      <small>© 2025 Qun & Partner · Crafted with ♥ · <a href="#home">返回顶部</a></small>
-    </div>
-  </footer>
-
-  <script src="https://webapi.amap.com/maps?v=2.0&key=384cf742c0a95d7e155dccabdc3b4fe0"></script>
-  <script>
-    // ===== Configurable Basics =====
-    const WEDDING_DATE = '2025-10-01T11:00:00+09:00'; // 修改为你的婚礼时间（东京时区）
-    const COUPLE = { groom: '张鑫', bride: '贾玉洁' };
-
-    // ===== Smooth anchor scroll =====
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href');
-        const el = document.querySelector(id);
-        if(el){
-          e.preventDefault();
-          el.scrollIntoView({behavior:'smooth', block:'start'});
-        }
-      });
+<script src="https://webapi.amap.com/maps?v=2.0&key=384cf742c0a95d7e155dccabdc3b4fe0"></script>
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const el=document.querySelector(a.getAttribute('href'));
+      if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth', block:'start'});}
     });
+  });
 
-    // ===== Initialize names/date label =====
-    document.getElementById('groom-name').textContent = COUPLE.groom;
-    document.getElementById('bride-name').textContent = COUPLE.bride;
-    const dateLabel = new Date(WEDDING_DATE);
-    const yyyy = dateLabel.getFullYear();
-    const mm = String(dateLabel.getMonth()+1).padStart(2,'0');
-    const dd = String(dateLabel.getDate()).padStart(2,'0');
-    document.getElementById('wedding-date-label').textContent = `${yyyy}.${mm}.${dd}`;
+  // Countdown
+  const WEDDING_DATE='2025-10-01T11:00:00+09:00';
+  function rerenderCountdown(){
+    const t=new Date(WEDDING_DATE)-Date.now();
+    const clamp=n=>Math.max(0,n);
+    const days=clamp(Math.floor(t/(1000*60*60*24)));
+    const hours=clamp(Math.floor((t%(1000*60*60*24))/(1000*60*60)));
+    const mins=clamp(Math.floor((t%(1000*60*60))/(1000*60)));
+    const secs=clamp(Math.floor((t%(1000*60))/1000));
+    document.getElementById('cd-days').textContent=days;
+    document.getElementById('cd-hours').textContent=hours;
+    document.getElementById('cd-mins').textContent=mins;
+    document.getElementById('cd-secs').textContent=secs;
+  }
+  rerenderCountdown(); setInterval(rerenderCountdown,1000);
 
-    // ===== Countdown & Married Duration =====
-    function rerenderCountdown(){
-      const t = new Date(WEDDING_DATE).getTime() - Date.now();
-      const clamp = (n)=> Math.max(0, n);
-      const days   = clamp(Math.floor(t / (1000*60*60*24)));
-      const hours  = clamp(Math.floor((t%(1000*60*60*24))/(1000*60*60)));
-      const mins   = clamp(Math.floor((t%(1000*60*60))/(1000*60)));
-      const secs   = clamp(Math.floor((t%(1000*60))/1000));
-      document.getElementById('cd-days').textContent  = days;
-      document.getElementById('cd-hours').textContent = hours;
-      document.getElementById('cd-mins').textContent  = mins;
-      document.getElementById('cd-secs').textContent  = secs;
-    }
-    function renderDuration() {
-      const now = new Date();
-      const weddingDate = new Date(WEDDING_DATE);
-      const marriedStart = new Date('2025-05-21T00:00:00+09:00');
-      const countdownEl = document.getElementById('countdown');
-      if (now < weddingDate) {
-        countdownEl.style.display = '';
-        document.getElementById('married-duration')?.remove();
-      } else {
-        countdownEl.style.display = 'none';
-        let diff = now - marriedStart;
-        let years = Math.floor(diff / (1000*60*60*24*365.2425));
-        let days = Math.floor((diff % (1000*60*60*24*365.2425)) / (1000*60*60*24));
-        let hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-        let html = `<div id="married-duration" style="margin:24px 0 16px;font-size:20px;color:#e67aa8;font-weight:600">我们已经结婚${years>0?years+'年':''}${days}天${hours}小时</div>`;
-        if (!document.getElementById('married-duration')) {
-          countdownEl.insertAdjacentHTML('afterend', html);
-        } else {
-          document.getElementById('married-duration').innerHTML = `我们已经结婚${years>0?years+'年':''}${days}天${hours}小时`;
-        }
-      }
-    }
-    rerenderCountdown();
-    renderDuration();
-    setInterval(()=>{rerenderCountdown();renderDuration();}, 1000);
-
-    // ===== Guestbook (Netlify Functions) =====
-    async function fetchMessages() {
-      const res = await fetch('/.netlify/functions/guestbook-list');
-      return res.ok ? await res.json() : [];
-    }
-    async function submitMessage(data) {
-      const res = await fetch('/.netlify/functions/submit-guestbook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      return await res.json();
-    }
-    function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
-    async function renderMessages() {
-      const host = document.getElementById('gb-list');
-      host.innerHTML = '<p class="note">加载中...</p>';
-      const list = await fetchMessages();
-      if(!list.length){ host.innerHTML = '<p class="note">目前还没有留言，快来写下第一条祝福吧！</p>'; return; }
-      host.innerHTML = list.map(m=> `
-        <div class="msg">
-          <strong>${escapeHtml(m.name)}</strong> <span class="note">· ${new Date(m.created_at).toLocaleString()}</span>
-          <div>${escapeHtml(m.message).replace(/\n/g,'<br/>')}</div>
-          ${m.attending ? '<div class="pill" style="margin-top:8px;display:inline-block">出席</div>' : ''}
-        </div>
-      `).join('');
-    }
-    document.getElementById('gb-form').addEventListener('submit', async e=>{
-      e.preventDefault();
-      const name = document.getElementById('gb-name').value.trim();
-      const message  = document.getElementById('gb-msg').value.trim();
-      const attending = document.getElementById('gb-attend').checked;
-      if(!name || !message){ alert('请填写名字与留言'); return; }
-      const result = await submitMessage({name, message, attending});
-      if(result.success){
-        e.target.reset();
-        renderMessages();
-      }else{
-        alert('提交失败：' + (result.error || '未知错误'));
-      }
+  // Lightbox
+  const lb=document.getElementById('lightbox');
+  const lbImg=document.getElementById('lb-img');
+  const lbVideo=document.getElementById('lb-video');
+  document.querySelectorAll('.gallery img,.gallery video,.tl-img img,.tl-img video').forEach(el=>{
+    el.addEventListener('click',()=>{
+      if(el.tagName==='IMG'){ lbImg.src=el.src; lbImg.style.display='block'; lbVideo.style.display='none'; }
+      else { lbVideo.src=el.src; lbVideo.style.display='block'; lbVideo.muted=true; lbVideo.autoplay=true; lbVideo.playsInline=true; lbVideo.load(); lbImg.style.display='none'; }
+      lb.style.display='flex';
     });
-    renderMessages();
-
-    // ===== AMap for wedding schedule =====
-    window.onload = function() {
-      var map = new AMap.Map('amap2', {
-        center: [106.28816853943466, 38.41831024964368], // 银川立达深杭国际酒店最新经纬度
-        zoom: 15
-      });
-      var marker = new AMap.Marker({
-        position: [106.28816853943466, 38.41831024964368],
-        title: '银川立达深杭国际酒店'
-      });
-      map.add(marker);
-      marker.on('click', function() {
-        window.open('https://uri.amap.com/navigation?to=106.28816853943466,38.41831024964368,银川立达深杭国际酒店', '_blank');
-      });
-    }
-  </script>
+  });
+</script>
 </body>
 </html>
