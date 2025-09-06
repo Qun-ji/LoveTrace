@@ -3,12 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LoveTrace</title>
-  <meta name="description" content="一页式婚礼纪念网站：倒计时、我们的故事、婚礼安排、相册与留言板。" />
-  <meta property="og:title" content="我们结婚啦 · Wedding" />
-  <meta property="og:description" content="一页式婚礼纪念网站：倒计时、我们的故事、婚礼安排、相册与留言板。" />
+  <title>张鑫 & 贾玉洁 的婚礼邀请 | 2025.10.01 银川立达深杭国际酒店</title>
+  <meta name="description" content="张鑫和贾玉洁的婚礼邀请函，2025年10月1日在银川立达深杭国际酒店举行。诚邀亲友见证我们的爱情，分享我们的幸福时刻。" />
+  <meta name="keywords" content="张鑫,贾玉洁,婚礼,结婚,银川,立达深杭国际酒店,2025,邀请函,爱情故事" />
+  <meta name="author" content="张鑫 & 贾玉洁" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://your-domain.com/" />
+  <meta property="og:title" content="张鑫 & 贾玉洁 的婚礼邀请" />
+  <meta property="og:description" content="诚邀亲友见证我们的爱情，2025年10月1日银川立达深杭国际酒店" />
+  <meta property="og:image" content="https://your-domain.com/images/head.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://your-domain.com/" />
+  <meta property="twitter:title" content="张鑫 & 贾玉洁 的婚礼邀请" />
+  <meta property="twitter:description" content="诚邀亲友见证我们的爱情，2025年10月1日银川立达深杭国际酒店" />
+  <meta property="twitter:image" content="https://your-domain.com/images/head.jpg" />
+  
   <meta name="theme-color" content="#F4CDE1"/>
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "张鑫 & 贾玉洁 的婚礼",
+    "description": "诚邀亲友见证我们的爱情，分享我们的幸福时刻",
+    "startDate": "2025-10-01T11:00:00+08:00",
+    "endDate": "2025-10-01T14:00:00+08:00",
+    "location": {
+      "@type": "Place",
+      "name": "银川立达深杭国际酒店",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "银川",
+        "addressRegion": "宁夏",
+        "addressCountry": "CN"
+      }
+    },
+    "organizer": {
+      "@type": "Person",
+      "name": "张鑫 & 贾玉洁"
+    },
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -74,10 +119,157 @@
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     .schedule .item{display:grid;grid-template-columns:1fr;gap:12px}
     iframe.map{width:100%;height:220px;border:0;border-radius:12px}
-    /* Gallery */
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .gallery img, .gallery video{width:100%; height:auto; border-radius:12px;} /* 修改：相册视频响应式 */
-    .gallery img:hover, .gallery video:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.12)}
+    /* Modal for fullscreen images/videos */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      cursor: pointer;
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 90%;
+      max-width: 1200px;
+      max-height: 90%;
+      object-fit: contain;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .modal video {
+      width: 100%;
+      height: auto;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #bbb;
+    }
+    /* Make images/videos clickable */
+    .clickable {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .clickable:hover {
+      transform: scale(1.02);
+    }
+    
+    /* Lazy loading */
+    img[data-src] {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    img.loaded {
+      opacity: 1;
+    }
+    
+    /* Animation effects */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.6s ease-out;
+    }
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.6s ease-out;
+    }
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.6s ease-out;
+    }
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    /* Social sharing */
+    .share-buttons {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .share-btn.wechat {
+      background: #07C160;
+      color: white;
+    }
+    .share-btn.wechat:hover {
+      background: #06AD56;
+    }
+    .share-btn.weibo {
+      background: #E6162D;
+      color: white;
+    }
+    .share-btn.weibo:hover {
+      background: #D0142A;
+    }
+    .share-btn.copy {
+      background: var(--primary);
+      color: white;
+    }
+    .share-btn.copy:hover {
+      background: #d45a8a;
+    }
+    .share-btn.qr {
+      background: #6c757d;
+      color: white;
+    }
+    .share-btn.qr:hover {
+      background: #5a6268;
+    }
     /* Guestbook */
     .guestbook{display:grid;grid-template-columns:1fr 1fr;gap:20px}
     .input{width:100%;padding:10px 12px;border:1px solid #e9d3e1;border-radius:12px;background:#fff}
@@ -120,7 +312,7 @@
 
 <main id="home" class="hero">
   <div class="container inner">
-    <div>
+    <div class="fade-in">
       <div class="date">婚礼日期 · <span id="wedding-date-label">2025.10.01</span></div>
       <h1>我们结婚啦</h1>
       <p class="lead">铭记曾经的悸动和未来的承诺</p>
@@ -134,80 +326,86 @@
         <a class="btn" href="#schedule">查看婚礼安排</a>
         <a class="btn ghost" href="#guestbook">爱的碎碎念</a>
       </div>
+      <div class="share-buttons fade-in">
+        <button class="share-btn wechat" onclick="shareToWechat()">📱 微信分享</button>
+        <button class="share-btn weibo" onclick="shareToWeibo()">📢 微博分享</button>
+        <button class="share-btn copy" onclick="copyLink()">📋 复制链接</button>
+        <button class="share-btn qr" onclick="showQR()">📱 生成二维码</button>
+      </div>
     </div>
-    <div class="card">
-      <img alt="hero" src="images/head.jpg" />
+    <div class="card scale-in">
+      <img alt="hero" src="images/head.jpg" class="clickable" loading="lazy" />
     </div>
   </div>
   <div class="ring"></div>
 </main>
 
 <section id="couple" class="section">
-  <h2>命中注定的两个人</h2>
+  <h2 class="fade-in">命中注定的两个人</h2>
   <div class="container couple">
-    <div class="card person">
-      <div class="avatar"><img src="images/touxiang2.jpg" alt="groom"/></div>
+    <div class="card person slide-in-left">
+      <div class="avatar"><img src="images/touxiang2.jpg" alt="groom" class="clickable" loading="lazy"/></div>
       <div>
         <h3>新郎 · <span id="groom-name">张鑫</span></h3>
-        <blockquote>“我有三样东西不可或缺：水、空气，以及下边那个女孩。”</blockquote>
+        <blockquote>"我有三样东西不可或缺：水、空气，以及下边那个女孩。"</blockquote>
       </div>
     </div>
-    <div class="card person">
-      <div class="avatar"><img src="images/touxiang2.jpg" alt="Bride"/></div>
+    <div class="card person slide-in-right">
+      <div class="avatar"><img src="images/touxiang2.jpg" alt="Bride" class="clickable" loading="lazy"/></div>
       <div>
         <h3>新娘 · <span id="bride-name">贾玉洁</span></h3>
-        <blockquote>“我有三样东西不可或缺：水、空气，以及上边那个男孩。”</blockquote>
+        <blockquote>"我有三样东西不可或缺：水、空气，以及上边那个男孩。"</blockquote>
       </div>
     </div>
   </div>
 </section>
 
 <section id="story" class="section">
-  <h2>心动轨迹</h2>
+  <h2 class="fade-in">心动轨迹</h2>
   <div class="container timeline">
-    <div class="tl">
+    <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相遇</span>
         <p>一次回眸，一个笑容，一切就此开始。</p>
       </div>
       <div class="tl-img">
-        <img src="images/first.jpg" alt="meet" class="big-photo"/>
+        <img src="images/first.jpg" alt="meet" class="big-photo clickable" loading="lazy"/>
       </div>
     </div>
-    <div class="tl">
+    <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相知</span>
         <p>旅行、电影、深夜长谈，我们把彼此放进了生活的每一个角落。</p>
       </div>
       <div class="tl-img">
-        <img src="images/know.jpg" alt="know" class="big-photo"/>
+        <img src="images/know.jpg" alt="know" class="big-photo clickable" loading="lazy"/>
       </div>
     </div>
-    <div class="tl">
+    <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相约</span>
         <p>在亲友的见证下，我们许下携手一生的承诺。</p>
       </div>
       <div class="tl-img">
-        <video src="video/ding.mp4" autoplay muted loop class="responsive-video"></video>
+        <video src="video/ding.mp4" autoplay muted loop class="responsive-video clickable" loading="lazy"></video>
       </div>
     </div>
-    <div class="tl">
+    <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相依</span>
         <p>一纸证书，一生约定，我们正式成为彼此的家人。</p>
       </div>
       <div class="tl-img">
-        <video src="video/zheng.mp4" autoplay muted loop class="responsive-video"></video>
+        <video src="video/zheng.mp4" autoplay muted loop class="responsive-video clickable" loading="lazy"></video>
       </div>
     </div>
-    <div class="tl">
+    <div class="tl fade-in">
       <div class="tl-card">
         <span class="pill">相守</span>
         <p>往后余生，不止有柴米油盐，还有浪漫和远方</p>
       </div>
       <div class="tl-img">
-        <img src="images/second.jpg" alt="keep" class="big-photo"/>
+        <img src="images/second.jpg" alt="keep" class="big-photo clickable" loading="lazy"/>
       </div>
     </div>
   </div>
@@ -229,14 +427,14 @@
 </section>
 
 <section id="gallery" class="section">
-  <h2>回响</h2>
+  <h2 class="fade-in">回响</h2>
   <div class="container gallery">
-    <img src="images/one.jpg" alt="g1"/>
-    <img src="images/two.jpg" alt="g2"/>
-    <img src="images/three.jpg" alt="g3"/>
-    <img src="images/four.jpg" alt="g4"/>
-    <img src="images/five.jpg" alt="g5"/>
-    <img src="images/six.jpg" alt="g6"/>
+    <img src="images/one.jpg" alt="g1" class="clickable fade-in" loading="lazy"/>
+    <img src="images/two.jpg" alt="g2" class="clickable fade-in" loading="lazy"/>
+    <img src="images/three.jpg" alt="g3" class="clickable fade-in" loading="lazy"/>
+    <img src="images/four.jpg" alt="g4" class="clickable fade-in" loading="lazy"/>
+    <img src="images/five.jpg" alt="g5" class="clickable fade-in" loading="lazy"/>
+    <img src="images/six.jpg" alt="g6" class="clickable fade-in" loading="lazy"/>
   </div>
 </section>
 
@@ -269,8 +467,150 @@
 </footer>
 
 <script src="https://webapi.amap.com/maps?v=2.0&key=384cf742c0a95d7e155dccabdc3b4fe0"></script>
-<script>
-  // ===== Configurable Basics =====
+  <!-- Modal for fullscreen display -->
+  <div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modal-img">
+    <video class="modal-content" id="modal-video" controls></video>
+  </div>
+
+  <script>
+    // ===== Social sharing functions =====
+    function shareToWechat() {
+      if (navigator.share) {
+        navigator.share({
+          title: '张鑫 & 贾玉洁 的婚礼邀请',
+          text: '诚邀亲友见证我们的爱情，2025年10月1日银川立达深杭国际酒店',
+          url: window.location.href
+        });
+      } else {
+        copyLink();
+        alert('链接已复制，请在微信中粘贴分享！');
+      }
+    }
+
+    function shareToWeibo() {
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent('张鑫 & 贾玉洁 的婚礼邀请');
+      const text = encodeURIComponent('诚邀亲友见证我们的爱情，2025年10月1日银川立达深杭国际酒店');
+      window.open(`https://service.weibo.com/share/share.php?url=${url}&title=${title}&content=${text}`);
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('链接已复制到剪贴板！');
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = window.location.href;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('链接已复制到剪贴板！');
+      });
+    }
+
+    function showQR() {
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}`;
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); z-index: 1000; display: flex;
+        align-items: center; justify-content: center; cursor: pointer;
+      `;
+      modal.innerHTML = `
+        <div style="background: white; padding: 20px; border-radius: 12px; text-align: center;">
+          <h3 style="margin: 0 0 15px 0; color: #333;">扫码分享</h3>
+          <img src="${qrUrl}" alt="二维码" style="display: block; margin: 0 auto;">
+          <p style="margin: 15px 0 0 0; color: #666; font-size: 14px;">点击任意位置关闭</p>
+        </div>
+      `;
+      modal.onclick = () => document.body.removeChild(modal);
+      document.body.appendChild(modal);
+    }
+
+    // ===== Lazy loading and animations =====
+    function initLazyLoading() {
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.src || img.dataset.src;
+            img.classList.add('loaded');
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      images.forEach(img => imageObserver.observe(img));
+    }
+
+    function initScrollAnimations() {
+      const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
+      const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      animatedElements.forEach(el => animationObserver.observe(el));
+    }
+
+    // ===== Modal functionality =====
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalVideo = document.getElementById('modal-video');
+    const closeBtn = document.getElementsByClassName('close')[0];
+
+    // Add click event to all clickable images and videos
+    document.querySelectorAll('.clickable').forEach(element => {
+      element.addEventListener('click', function() {
+        if (this.tagName === 'IMG') {
+          modalImg.src = this.src;
+          modalImg.style.display = 'block';
+          modalVideo.style.display = 'none';
+        } else if (this.tagName === 'VIDEO') {
+          modalVideo.src = this.src;
+          modalVideo.style.display = 'block';
+          modalImg.style.display = 'none';
+        }
+        modal.style.display = 'block';
+      });
+    });
+
+    // Close modal when clicking close button
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+      modalVideo.pause();
+    };
+
+    // Close modal when clicking outside
+    modal.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+        modalVideo.pause();
+      }
+    };
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        modal.style.display = 'none';
+        modalVideo.pause();
+      }
+    });
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      initLazyLoading();
+      initScrollAnimations();
+    });
+
+    // ===== Configurable Basics =====
   const WEDDING_DATE = '2025-10-01T11:00:00+09:00';
   const COUPLE = { groom: '张鑫', bride: '贾玉洁' };
 
