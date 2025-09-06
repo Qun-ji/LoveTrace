@@ -590,7 +590,7 @@
           <textarea class="input" id="gb-msg" rows="4" placeholder="偷偷说点小心事，或者大大的祝福都可以 😉" required></textarea>
           <label class="note"><input type="checkbox" id="gb-attend" /> 出席（RSVP）</label>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn" type="submit">提交</button>
+            <button class="btn" type="submit">Love Send</button>
           </div>
           <p class="note">提示：留言将实时提交到云端数据库，所有宾客可见。</p>
         </div>
@@ -681,7 +681,7 @@
       successDiv.className = 'success-message';
       successDiv.innerHTML = `
         <h3>${randomMessage}</h3>
-        <p>祝福已成功提交，感谢参与！</p>
+        <p>祝福已成功送达，感谢有你！</p>
       `;
       
       document.body.appendChild(successDiv);
@@ -722,25 +722,6 @@
     }
     
     // ===== Social sharing functions =====
-    function shareToWechat() {
-      if (navigator.share) {
-        navigator.share({
-          title: '张鑫 & 贾玉洁 的婚礼邀请',
-          text: '诚邀亲友见证我们的爱情，2025年10月1日银川立达深杭国际酒店',
-          url: window.location.href
-        });
-      } else {
-        copyLink();
-        alert('链接已复制，请在微信中粘贴分享！');
-      }
-    }
-
-    function shareToWeibo() {
-      const url = encodeURIComponent(window.location.href);
-      const title = encodeURIComponent('张鑫 & 贾玉洁 的婚礼邀请');
-      const text = encodeURIComponent('诚邀亲友见证我们的爱情，2025年10月1日银川立达深杭国际酒店');
-      window.open(`https://service.weibo.com/share/share.php?url=${url}&title=${title}&content=${text}`);
-    }
 
     function copyLink() {
       navigator.clipboard.writeText(window.location.href).then(() => {
