@@ -267,8 +267,156 @@
       background: #6c757d;
       color: white;
     }
-    .share-btn.qr:hover {
-      background: #5a6268;
+    /* Interactive effects */
+    .celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      animation: confetti-fall 3s linear infinite;
+    }
+    
+    .confetti:nth-child(odd) {
+      background: #ff6b6b;
+      animation-delay: -0.5s;
+    }
+    
+    .confetti:nth-child(3n) {
+      background: #4ecdc4;
+      animation-delay: -1s;
+    }
+    
+    .confetti:nth-child(4n) {
+      background: #45b7d1;
+      animation-delay: -1.5s;
+    }
+    
+    .confetti:nth-child(5n) {
+      background: #f9ca24;
+      animation-delay: -2s;
+    }
+    
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    .success-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 10000;
+      text-align: center;
+      animation: success-pop 0.6s ease-out;
+    }
+    
+    @keyframes success-pop {
+      0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .success-message h3 {
+      margin: 0 0 10px 0;
+      font-size: 24px;
+    }
+    
+    .success-message p {
+      margin: 0;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+    
+    .heart-float {
+      position: absolute;
+      color: #ff6b6b;
+      font-size: 20px;
+      animation: heart-float 2s ease-out forwards;
+      pointer-events: none;
+    }
+    
+    @keyframes heart-float {
+      0% {
+        transform: translateY(0) scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-50px) scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(0);
+        opacity: 0;
+      }
+    }
+    
+    .blessing-counter {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      display: inline-block;
+      margin: 10px 0;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .recent-blessings {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin: 15px 0;
+      text-align: center;
+    }
+    
+    .recent-blessings h4 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+    }
+    
+    .recent-blessings .blessing-item {
+      background: rgba(255,255,255,0.2);
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin: 5px 0;
+      font-size: 14px;
     }
     /* Guestbook */
     .guestbook{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -450,6 +598,13 @@
     </div>
     <div class="card" id="gb-list">
       <!-- messages render here -->
+      <div class="blessing-counter" id="blessing-counter" style="display: none;">
+        💕 已有 <span id="blessing-count">0</span> 位朋友送上祝福
+      </div>
+      <div class="recent-blessings" id="recent-blessings" style="display: none;">
+        <h4>💖 最新祝福</h4>
+        <div id="recent-blessings-list"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -473,6 +628,95 @@
   </div>
 
   <script>
+    // ===== Interactive celebration functions =====
+    function createConfetti() {
+      const celebration = document.createElement('div');
+      celebration.className = 'celebration';
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        celebration.appendChild(confetti);
+      }
+      
+      document.body.appendChild(celebration);
+      
+      setTimeout(() => {
+        document.body.removeChild(celebration);
+      }, 5000);
+    }
+    
+    function createHearts() {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'heart-float';
+          heart.innerHTML = '💖';
+          heart.style.left = Math.random() * window.innerWidth + 'px';
+          heart.style.top = window.innerHeight + 'px';
+          document.body.appendChild(heart);
+          
+          setTimeout(() => {
+            document.body.removeChild(heart);
+          }, 2000);
+        }, i * 200);
+      }
+    }
+    
+    function showSuccessMessage(name) {
+      const messages = [
+        `🎉 ${name}，感谢你的祝福！`,
+        `💕 ${name}，你的祝福让我们很感动！`,
+        `✨ ${name}，愿你的祝福成真！`,
+        `🌟 ${name}，谢谢你的美好祝愿！`,
+        `💖 ${name}，你的祝福是最珍贵的礼物！`
+      ];
+      
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      
+      const successDiv = document.createElement('div');
+      successDiv.className = 'success-message';
+      successDiv.innerHTML = `
+        <h3>${randomMessage}</h3>
+        <p>祝福已成功提交，感谢参与！</p>
+      `;
+      
+      document.body.appendChild(successDiv);
+      
+      setTimeout(() => {
+        document.body.removeChild(successDiv);
+      }, 3000);
+    }
+    
+    function updateBlessingCounter(count) {
+      const counter = document.getElementById('blessing-counter');
+      const countSpan = document.getElementById('blessing-count');
+      
+      if (count > 0) {
+        counter.style.display = 'block';
+        countSpan.textContent = count;
+      }
+    }
+    
+    function updateRecentBlessings(messages) {
+      const recentDiv = document.getElementById('recent-blessings');
+      const listDiv = document.getElementById('recent-blessings-list');
+      
+      if (messages.length > 0) {
+        recentDiv.style.display = 'block';
+        const recentMessages = messages.slice(0, 3); // 显示最新3条
+        
+        listDiv.innerHTML = recentMessages.map(msg => `
+          <div class="blessing-item">
+            <strong>${escapeHtml(msg.name)}</strong>: ${escapeHtml(msg.message).substring(0, 30)}${msg.message.length > 30 ? '...' : ''}
+          </div>
+        `).join('');
+      }
+    }
+    
     // ===== Social sharing functions =====
     function shareToWechat() {
       if (navigator.share) {
@@ -686,33 +930,84 @@
     return await res.json();
   }
   function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
-  async function renderMessages() {
-    const host = document.getElementById('gb-list');
-    host.innerHTML = '<p class="note">加载中...</p>';
-    const list = await fetchMessages();
-    if(!list.length){ host.innerHTML = '<p class="note">目前还没有留言，快来写下第一条祝福吧！</p>'; return; }
-    host.innerHTML = list.map(m=> `
-        <div class="msg">
-          <strong>${escapeHtml(m.name)}</strong> <span class="note">· ${new Date(m.created_at).toLocaleString()}</span>
-          <div>${escapeHtml(m.message).replace(/\n/g,'<br/>')}</div>
-          ${m.attending ? '<div class="pill" style="margin-top:8px;display:inline-block">出席</div>' : ''}
+    async function renderMessages() {
+      const host = document.getElementById('gb-list');
+      host.innerHTML = '<p class="note">加载中...</p>';
+      const list = await fetchMessages();
+      
+      // 更新祝福计数器和最新祝福
+      updateBlessingCounter(list.length);
+      updateRecentBlessings(list);
+      
+      if(!list.length){ 
+        host.innerHTML = `
+          <p class="note">目前还没有留言，快来写下第一条祝福吧！</p>
+          <div class="blessing-counter" id="blessing-counter" style="display: none;">
+            💕 已有 <span id="blessing-count">0</span> 位朋友送上祝福
+          </div>
+          <div class="recent-blessings" id="recent-blessings" style="display: none;">
+            <h4>💖 最新祝福</h4>
+            <div id="recent-blessings-list"></div>
+          </div>
+        `; 
+        return; 
+      }
+      
+      host.innerHTML = `
+        <div class="blessing-counter" id="blessing-counter" style="display: none;">
+          💕 已有 <span id="blessing-count">0</span> 位朋友送上祝福
         </div>
-      `).join('');
-  }
-  document.getElementById('gb-form').addEventListener('submit', async e=>{
-    e.preventDefault();
-    const name = document.getElementById('gb-name').value.trim();
-    const message  = document.getElementById('gb-msg').value.trim();
-    const attending = document.getElementById('gb-attend').checked;
-    if(!name || !message){ alert('请填写名字与留言'); return; }
-    const result = await submitMessage({name, message, attending});
-    if(result.success){
-      e.target.reset();
-      renderMessages();
-    }else{
-      alert('提交失败：' + (result.error || '未知错误'));
+        <div class="recent-blessings" id="recent-blessings" style="display: none;">
+          <h4>💖 最新祝福</h4>
+          <div id="recent-blessings-list"></div>
+        </div>
+        ${list.map(m=> `
+          <div class="msg">
+            <strong>${escapeHtml(m.name)}</strong> <span class="note">· ${new Date(m.created_at).toLocaleString()}</span>
+            <div>${escapeHtml(m.message).replace(/\n/g,'<br/>')}</div>
+            ${m.attending ? '<div class="pill" style="margin-top:8px;display:inline-block">出席</div>' : ''}
+          </div>
+        `).join('')}
+      `;
+      
+      // 重新更新计数器和最新祝福
+      updateBlessingCounter(list.length);
+      updateRecentBlessings(list);
     }
-  });
+    document.getElementById('gb-form').addEventListener('submit', async e=>{
+      e.preventDefault();
+      const name = document.getElementById('gb-name').value.trim();
+      const message  = document.getElementById('gb-msg').value.trim();
+      const attending = document.getElementById('gb-attend').checked;
+      if(!name || !message){ alert('请填写名字与留言'); return; }
+      
+      // 显示提交中的状态
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = '提交中...';
+      submitBtn.disabled = true;
+      
+      const result = await submitMessage({name, message, attending});
+      
+      if(result.success){
+        // 成功提交后的互动效果
+        showSuccessMessage(name);
+        createConfetti();
+        createHearts();
+        
+        e.target.reset();
+        await renderMessages();
+        
+        // 滚动到留言区域
+        document.getElementById('gb-list').scrollIntoView({ behavior: 'smooth' });
+      }else{
+        alert('提交失败：' + (result.error || '未知错误'));
+      }
+      
+      // 恢复按钮状态
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    });
   renderMessages();
 
   // ===== AMap for wedding schedule =====
